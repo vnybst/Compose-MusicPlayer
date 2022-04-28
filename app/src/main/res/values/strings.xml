@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ComposeMusicPlayer</string>
+    <string name="menu_search">Search music</string>
+
+    <string name="song_description">%1$s &#8226; %2$s</string>
+    <string name="play_all_songs">Play all</string>
+    <string name="shuffle_all_songs">Shuffle all</string>
+    <string name="play_songs">Play song</string>
+</resources>
