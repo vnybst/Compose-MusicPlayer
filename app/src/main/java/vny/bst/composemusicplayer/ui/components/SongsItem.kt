@@ -1,11 +1,13 @@
 package vny.bst.composemusicplayer.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -22,12 +24,17 @@ fun SongsItemView(
     imageId: Int,
     songName: String,
     songDescription: String,
-    color: Color
+    color: Color,
+    clickListener: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth()
+            .clickable {
+                clickListener()
+            },
+        verticalAlignment = Alignment.CenterVertically
     ) {
         SquareImageView(color)
         Column(modifier = Modifier.padding(start = 16.dp)) {
@@ -66,5 +73,7 @@ fun PreViewSongItem() {
             "Asha Bhosle",
             "Download"
         )
-    )
+    ) {
+
+    }
 }

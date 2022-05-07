@@ -1,13 +1,14 @@
 package vny.bst.composemusicplayer.ui.screens.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,7 +28,6 @@ import vny.bst.composemusicplayer.ui.components.MusicToolbar
 import vny.bst.composemusicplayer.ui.components.NowPlayingView
 import vny.bst.composemusicplayer.ui.components.SongsItemView
 import vny.bst.composemusicplayer.utils.randomThumbColor
-import kotlin.random.Random
 
 @Preview
 @Composable
@@ -64,7 +64,7 @@ fun HomeScreen() {
             ShuffleControl(
                 Modifier
                     .wrapContentWidth()
-                    .padding(14.dp)
+                    .padding(start = 8.dp, top = 8.dp)
                     .constrainAs(shuffleControl) {
                         top.linkTo(tabs.bottom)
                         start.linkTo(tabs.start)
@@ -72,7 +72,7 @@ fun HomeScreen() {
             )
             SongsListView(
                 Modifier
-                    .padding(top = 10.dp)
+                    .padding(top = 8.dp)
                     .constrainAs(songsListView) {
                         top.linkTo(shuffleControl.bottom)
                         start.linkTo(parent.start)
@@ -95,30 +95,34 @@ fun HomeScreen() {
 
 @Composable
 fun ShuffleControl(modifier: Modifier = Modifier) {
-    Row(
-        horizontalArrangement = Arrangement.Start,
+    TextButton(
+        onClick = { /*TODO*/ },
         modifier = modifier
     ) {
-
-        Image(
-            painter = painterResource(id = R.drawable.ic_outline_shuffle_24),
-            contentDescription = stringResource(
-                id = R.string.shuffle_all_songs
-            ),
-            colorFilter = ColorFilter.tint(Color.Black)
-        )
-
-        Text(
-            text = stringResource(id = R.string.shuffle_all_songs),
-            modifier = Modifier
-                .align(
-                    Alignment.CenterVertically
-                )
-                .padding(start = 10.dp),
-            style = TextStyle(
-                fontWeight = FontWeight.Medium
+        Row(
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_outline_shuffle_24),
+                contentDescription = stringResource(
+                    id = R.string.shuffle_all_songs
+                ),
+                colorFilter = ColorFilter.tint(Color.Black)
             )
-        )
+
+            Text(
+                text = stringResource(id = R.string.shuffle_all_songs),
+                modifier = Modifier
+                    .align(
+                        Alignment.CenterVertically
+                    )
+                    .padding(start = 10.dp),
+                style = TextStyle(
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Black
+                )
+            )
+        }
     }
 }
 
@@ -131,7 +135,9 @@ fun SongsListView(modifier: Modifier = Modifier) {
                 songName = songs.songName,
                 songDescription = songs.songDetail,
                 color = randomThumbColor()
-            )
+            ) {
+
+            }
         }
     }
 }

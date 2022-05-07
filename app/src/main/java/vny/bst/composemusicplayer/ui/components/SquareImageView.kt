@@ -27,7 +27,9 @@ fun SquareImageView(
         shape = RoundedCornerShape(5.dp),
         backgroundColor = color,
         elevation = 0.dp,
-        modifier = Modifier.size(42.dp)
+        modifier = Modifier
+            .size(48.dp)
+            .padding(5.dp)
     ) {
         Image(
             modifier = Modifier
