@@ -6,4 +6,13 @@
     <string name="play_all_songs">Play all</string>
     <string name="shuffle_all_songs">Shuffle all</string>
     <string name="play_songs">Play song</string>
+
+    <!--    Dialog String-->
+    <string name="str_dialog_dismiss">Dismiss</string>
+    <string name="str_dialog_ok">OK</string>
+    <string name="dialog_title_permission_declined">Storage permission denied</string>
+    <string name="dialog_title_permission_rationale">Storage permission required</string>
+    <string name="dialog_text_permission_declined">Open app settings to allow storage permission</string>
+    <string name="dialog_text_permission_rationale">Storage permission is required to access music files stored in your device</string>
+
 </resources>

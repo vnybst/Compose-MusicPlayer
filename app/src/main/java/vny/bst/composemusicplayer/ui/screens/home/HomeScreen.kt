@@ -27,7 +27,6 @@ import vny.bst.composemusicplayer.ui.components.MusicToolbar
 import vny.bst.composemusicplayer.ui.components.NowPlayingView
 import vny.bst.composemusicplayer.ui.components.SongsItemView
 import vny.bst.composemusicplayer.utils.randomThumbColor
-import kotlin.random.Random
 
 @Preview
 @Composable
