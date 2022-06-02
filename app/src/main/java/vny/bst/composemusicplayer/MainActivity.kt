@@ -8,11 +8,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.runtime.*
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModelProvider
-import vny.bst.composemusicplayer.data.loadAllSongs
 import vny.bst.composemusicplayer.extensions.openSettings
+import vny.bst.composemusicplayer.factory.HomeViewModelFactory
 import vny.bst.composemusicplayer.permissions.askStoragePermission
 import vny.bst.composemusicplayer.permissions.hasStoragePermissionGranted
 import vny.bst.composemusicplayer.permissions.showPermissionRationale
@@ -21,10 +22,12 @@ import vny.bst.composemusicplayer.ui.theme.ComposeMusicPlayerTheme
 import vny.bst.composemusicplayer.utils.Constants
 import vny.bst.composemusicplayer.utils.Dialog
 import vny.bst.composemusicplayer.viewmodels.CommonViewModel
+import vny.bst.composemusicplayer.viewmodels.HomeViewModel
 
 class MainActivity : ComponentActivity() {
 
     private lateinit var commonViewModel: CommonViewModel
+    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     Scaffold {
-                        MainScreen()
+                        MainScreen(homeViewModel)
 
                         val dialogType by
                         commonViewModel.showPermissionDialogLiveData.collectAsState()
@@ -76,6 +79,8 @@ class MainActivity : ComponentActivity() {
 
     private fun initViewModel() {
         commonViewModel = ViewModelProvider(this)[CommonViewModel::class.java]
+        homeViewModel =
+            ViewModelProvider(this, HomeViewModelFactory(this))[HomeViewModel::class.java]
     }
 
     private fun checkStoragePermission() {
@@ -110,6 +115,6 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-    private fun loadSongs() = loadAllSongs(this)
+    private fun loadSongs() = homeViewModel.loadSongs()
 
 }

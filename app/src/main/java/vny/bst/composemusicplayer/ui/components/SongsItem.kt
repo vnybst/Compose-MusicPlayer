@@ -53,18 +53,3 @@ fun SongsItemView(
         }
     }
 }
-
-@Preview
-@Composable
-fun PreViewSongItem() {
-    SongsItemView(
-        imageId = R.drawable.music_note,
-        songName = "Piya Tu Ab To Aaja (Monica, Oh My Darling!)",
-        color = Color.Red,
-        songDescription = stringResource(
-            id = R.string.song_description,
-            "Asha Bhosle",
-            "Download"
-        )
-    )
-}

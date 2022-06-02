@@ -17,20 +17,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import vny.bst.composemusicplayer.R
-import vny.bst.composemusicplayer.data.dummySongs
 import vny.bst.composemusicplayer.data.tabsList
 import vny.bst.composemusicplayer.ui.components.MusicToolbar
 import vny.bst.composemusicplayer.ui.components.NowPlayingView
 import vny.bst.composemusicplayer.ui.components.SongsItemView
 import vny.bst.composemusicplayer.utils.randomThumbColor
+import vny.bst.composemusicplayer.viewmodels.HomeViewModel
 
-@Preview
 @Composable
-fun HomeScreen() {
+fun HomeScreen(homeViewModel: HomeViewModel) {
     var tabIndex by remember { mutableStateOf(0) }
     Scaffold(modifier = Modifier.fillMaxSize()) {
 
@@ -76,7 +75,11 @@ fun HomeScreen() {
                         top.linkTo(shuffleControl.bottom)
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
-                    })
+                        bottom.linkTo(nowPlaying.top)
+                        height = Dimension.fillToConstraints
+                    },
+                homeViewModel
+            )
 
             NowPlayingView(
                 songName = "One love",
@@ -122,15 +125,20 @@ fun ShuffleControl(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun SongsListView(modifier: Modifier = Modifier) {
+fun SongsListView(modifier: Modifier = Modifier, homeViewModel: HomeViewModel) {
+    val songs = homeViewModel.songs().collectAsState()
     LazyColumn(modifier = modifier) {
-        itemsIndexed(dummySongs()) { _, songs ->
-            SongsItemView(
-                imageId = R.drawable.music_note,
-                songName = songs.songName,
-                songDescription = songs.songDetail,
-                color = randomThumbColor()
-            )
+        itemsIndexed(songs.value) { _, songs ->
+            songs.songName?.let {
+                songs.songAlbum?.let { it1 ->
+                    SongsItemView(
+                        imageId = R.drawable.music_note,
+                        songName = it,
+                        songDescription = it1,
+                        color = randomThumbColor()
+                    )
+                }
+            }
         }
     }
 }
