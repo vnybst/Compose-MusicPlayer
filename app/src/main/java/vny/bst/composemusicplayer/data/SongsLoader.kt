@@ -1,10 +1,12 @@
 package vny.bst.composemusicplayer.data
 
+import android.content.ContentUris
 import android.content.Context
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import vny.bst.composemusicplayer.model.Songs
+import vny.bst.composemusicplayer.utils.Constants
 
 fun loadAllSongs(context: Context): List<Songs> {
     val songs = ArrayList<Songs>()
@@ -17,6 +19,7 @@ fun loadAllSongs(context: Context): List<Songs> {
         MediaStore.Audio.Media.DURATION,
         MediaStore.Audio.Media.SIZE,
         MediaStore.Audio.Media.TITLE,
+        MediaStore.Audio.Media.ALBUM_ID,
         MediaStore.Audio.Media.DATA,
     )
     val selection = "${MediaStore.Audio.Media.IS_MUSIC} != 0"
@@ -44,27 +47,37 @@ fun loadAllSongs(context: Context): List<Songs> {
             // a URI representing the media item itself.
             Log.i(
                 "SongsList",
-                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME))
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
             )
 
-            val id = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID))
+            val id = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID))
             val songName =
-                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME))
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME))
             val songTitle =
-                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.TITLE))
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE))
             val songArtist =
-                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.ARTIST))
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST))
             val songAlbum =
-                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.ALBUM))
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM))
             val songData =
-                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA))
+                cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
             val songDuration =
-                cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION))
-            val songSize = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE))
-
+                cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION))
+            val songSize = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE))
+            val albumId =
+                cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID))
+            val uri = ContentUris.withAppendedId(Constants.ALBUM_ART_BASE_URI, albumId)
             songs.add(
                 Songs(
-                    id, songName, songTitle, songArtist, songDuration, songAlbum, songSize, songData
+                    id,
+                    songName,
+                    songTitle,
+                    songArtist,
+                    songDuration,
+                    songAlbum,
+                    songSize,
+                    songData,
+                    uri
                 )
             )
         }

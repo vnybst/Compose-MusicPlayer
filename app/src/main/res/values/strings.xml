@@ -15,4 +15,7 @@
     <string name="dialog_text_permission_declined">Open app settings to allow storage permission</string>
     <string name="dialog_text_permission_rationale">Storage permission is required to access music files stored in your device</string>
 
+    <string name="notification_channel">Current playing song Notification channel</string>
+    <string name="notification_channel_description">Notification displaying details about currently playing song</string>
+
 </resources>
